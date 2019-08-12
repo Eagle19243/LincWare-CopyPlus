@@ -1,1 +1,0 @@
-export const BASE_API_URL  = 'https://frozen-mountain-77018.herokuapp.com/api/v1';
