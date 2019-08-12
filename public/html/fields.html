@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>Admit + Fields</title>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../vendors/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendors/bootstrap/bootstrap-extend.min.css">
+    <link rel="stylesheet" href="../fonts/web-icons/web-icons.min.css">
+    <link rel="stylesheet" href="../css/fields.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header text-center font-size-24">
+            <label class="title">Admit + Fields</label>
+        </div>
+        <div class="body">
+            <div>
+                <label>Source URL</label>
+                <a href="#">seniorhome.admit.work</a>
+            </div>
+            <div>
+                <label>Form Name:</label>
+                <label>Resident Export</label>
+            </div>
+            <fieldset id="fields_found">
+                <legend>Fields Found</legend>
+                <div class="input-item">
+                    <div class="checkbox-custom checkbox-primary">
+                        <input type="checkbox" checked />
+                    </div>
+                    <input type="text" class="form-control">
+                    <button type="button" class="btn btn-icon btn-default btn-edit">
+                        <i class="icon wb-pencil" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </fieldset>
+        </div>
+        <div class="footer">
+            <button type="button" class="btn btn-info btn-back">
+                <i class="icon wb-chevron-left" aria-hidden="true"></i>
+                Back
+            </button>
+            <button type="button" class="btn btn-primary btn-save">
+                Save
+                <i class="icon wb-chevron-right" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <!-- Scripts -->
+    <script src="../vendors/jquery/jquery.min.js"></script>
+    <script src="../vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="../js/global.js"></script>
+    <script src="../js/fields.js"></script>
+</body>
+</html>

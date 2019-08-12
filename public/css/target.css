@@ -1,0 +1,21 @@
+.container {
+    width: 300px !important;
+    height: auto !important;
+    padding: 20px !important;
+}
+.container .header {
+    border: 1px solid transparent;
+    border-bottom-color: rgba(0,0,0,.075);
+    margin-bottom: 15px;
+}
+.container .body {
+    margin-bottom: 20px;
+}
+.container-name{
+    display: flex;
+    margin-bottom: 10px;
+}
+#target_name{
+    margin-left: 15px;
+    height: 27px;
+}

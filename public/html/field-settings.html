@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>Field Settings</title>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../vendors/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendors/bootstrap/bootstrap-extend.min.css">
+    <link rel="stylesheet" href="../fonts/web-icons/web-icons.min.css">
+    <link rel="stylesheet" href="../css/field-settings.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header text-center font-size-24">
+            <label class="title">Field Settings</label>
+        </div>
+        <div class="body">
+            <div class="input-item">
+                <label for="field_value">Value</label>
+                <input type="text" class="form-control" id="field_value">
+            </div>
+            <div class="input-item">
+                <label for="field_label">Label</label>
+                <input type="text" class="form-control" id="field_label">
+            </div>
+            <div class="input-item">
+                <label for="field_id">ID</label>
+                <input type="text" class="form-control" id="field_id">
+            </div>
+            <div class="input-item">
+                <label for="field_type">Type</label>
+                <input type="text" class="form-control" id="field_type">
+            </div>
+            <div class="input-item container-overwrite">
+                <input type="checkbox" id="allow_data_overwrite" checked>
+                <label for="allow_data_overwrite">Allow data to be overwritten</label>
+            </div>
+        </div>
+        <div class="footer">
+            <button type="button" class="btn btn-primary btn-save">Save</button>
+        </div>
+    </div>
+    <!-- Scripts -->
+    <script src="../vendors/jquery/jquery.min.js"></script>
+    <script src="../vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="../js/global.js"></script>
+    <script src="../js/field-settings.js"></script>
+</body>
+</html>

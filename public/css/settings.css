@@ -1,0 +1,15 @@
+.container {
+    width: 300px !important;
+    height: auto !important;
+    padding: 20px !important;
+}
+.container .header {
+    border: 1px solid transparent;
+    border-bottom-color: rgba(0,0,0,.075);
+}
+.list-group.bg-inherit .list-group-item {
+    border-bottom-color: transparent;
+}
+.list-group .list-group-item .icon {
+    float: right;
+}

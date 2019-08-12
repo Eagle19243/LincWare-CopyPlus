@@ -1,0 +1,26 @@
+.container {
+    width: 300px !important;
+    height: auto !important;
+    padding: 20px !important;
+}
+.container .header {
+    border: 1px solid transparent;
+    border-bottom-color: rgba(0,0,0,.075);
+    margin-bottom: 15px;
+}
+.container .body {
+    margin-bottom: 20px;
+}
+.container .body .input-item {
+    display: flex;
+    margin-bottom: 10px;
+}
+.container .body .input-item label {
+    width: 60px;
+}
+.container .body .container-overwrite {
+    display: none;
+}
+.footer .btn-save {
+    float: right;
+}
