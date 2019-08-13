@@ -21,6 +21,6 @@
 .container .body .container-overwrite {
     display: none;
 }
-.footer .btn-save {
-    float: right;
+.container .body .container-overwrite label {
+    width: auto !important;
 }
