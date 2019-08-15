@@ -14,6 +14,9 @@
 .container .body .input-item{
     display: flex;
 }
+.container .body #target_url {
+    word-break: break-all;
+}
 .body #fields_found{
     border: 1px solid !important;
     padding: 10px !important;

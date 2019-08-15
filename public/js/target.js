@@ -23,5 +23,11 @@ function init() {
 }
 
 function continueButtonClicked() {
+    if (isSource()) {
+        setValueToStorage({'s_name': $('#target_name').val()});
+    } else {
+        setValueToStorage({'d_name': $('#target_name').val()});
+    }
+    
     location.href = chrome.extension.getURL(`html/fields.html?target=${getTarget()}`);
 }
