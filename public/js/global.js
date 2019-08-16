@@ -30,7 +30,6 @@ function getValueFromStroage(keys) {
     })
 }
 
-
 function isSource() {
     let url = new URL(location.href);
     let target = url.searchParams.get('target');

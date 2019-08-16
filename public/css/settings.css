@@ -6,6 +6,25 @@
 .container .header {
     border: 1px solid transparent;
     border-bottom-color: rgba(0,0,0,.075);
+    margin-bottom: 15px;
+}
+.container .body .container-target .list-group-item {
+    display: flex !important;
+    align-items: center !important;
+}
+.container .body .container-target .list-group-item .container-img img{
+    height: 60px !important;
+}
+.container .body .container-target .list-group-item .container-buttons {
+    margin-left: 80px !important;
+}
+.container .body .container-target .list-group-item .container-buttons a {
+    cursor: pointer !important;
+    text-decoration: none !important;
+    display: flex !important;
+}
+.container .body .container-target .list-group-item .container-buttons a i {
+    margin-left: 5px !important;
 }
 .list-group.bg-inherit .list-group-item {
     border-bottom-color: transparent;

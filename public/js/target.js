@@ -22,12 +22,42 @@ function init() {
     });
 }
 
-function continueButtonClicked() {
+async function continueButtonClicked() {
+    let targetIndex = 0;
+
     if (isSource()) {
-        setValueToStorage({'s_name': $('#target_name').val()});
+        const item = await getValueFromStroage(['sources']);
+
+        if (!item.sources) {
+            setValueToStorage({
+                'sources': [{
+                    'name': $('#target_name').val()
+                }]
+            });
+        } else {
+            targetIndex = item.sources.length;
+            item.sources.push({
+                'name': $('#target_name').val()
+            });
+            setValueToStorage({'sources': item.sources});
+        }
     } else {
-        setValueToStorage({'d_name': $('#target_name').val()});
+        const item = await getValueFromStroage(['destinations']);
+
+        if (!item.destinations) {
+            setValueToStorage({
+                'destinations': [{
+                    'name': $('#target_name').val()
+                }]
+            });
+        } else {
+            targetIndex = item.destinations.length;
+            item.destinations.push({
+                'name': $('#target_name').val()
+            });
+            setValueToStorage({'sources': item.destinations});
+        }
     }
     
-    location.href = chrome.extension.getURL(`html/fields.html?target=${getTarget()}`);
+    location.href = chrome.extension.getURL(`html/fields.html?target=${getTarget()}&target_index=${targetIndex}`);
 }

@@ -33,7 +33,7 @@
     ],
     "permissions": [
         "tabs",
-        "unlimitedStorage"
+        "storage"
     ],
     "homepage_url": "https://github.com/Eagle19243/LincWare-CopyPlus#readme"
 }

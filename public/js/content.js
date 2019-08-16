@@ -24,5 +24,11 @@ function handleMessage(request, sender, sendResponse) {
         });
 
         sendResponse({fields: fields});
+    } else if (request.action === 'Open_File_Browser') {
+        console.log('Open_File_Browser');
+        const fileChooser = document.createElement('input');
+        fileChooser.type = 'file';
+        document.body.appendChild(fileChooser);
+        fileChooser.click();
     }
 }
