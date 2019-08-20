@@ -19,12 +19,12 @@ function sendMessageToTab(tabId, data) {
 }
 
 function setValueToStorage(data) {
-    chrome.storage.sync.set(data);
+    chrome.storage.local.set(data);
 }
 
 function getValueFromStroage(keys) {
     return new Promise((resolve) => {
-        chrome.storage.sync.get(keys, (items) => {
+        chrome.storage.local.get(keys, (items) => {
             resolve(items);
         });
     })
@@ -39,4 +39,19 @@ function isSource() {
 
 function getTarget() {
     return isSource() ? 'source' : 'destination';
+}
+
+function getTargetIndex() {
+    const url = new URL(location.href);
+    return url.searchParams.get('target_index');
+}
+
+function getEditStatus() {
+    const url = new URL(location.href);
+    return url.searchParams.get('edit');
+}
+
+function getFieldIndex() {
+    const url = new URL(location.href);
+    return url.searchParams.get('field_index');
 }
