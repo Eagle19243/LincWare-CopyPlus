@@ -4,7 +4,7 @@ window.onload = () => {
 
 async function init() {
     if (isSource()) {
-        if (getTargetIndex()) {
+        if (getEditStatus()) {
             const item = await getValueFromStroage(['sources']);
             $('#target_name').val(item.sources[getTargetIndex()].name);
             document.title = 'Edit Source';
@@ -14,7 +14,7 @@ async function init() {
             $('.title').html('New Source');
         }
     } else {
-        if (getTargetIndex()) {
+        if (getEditStatus()) {
             const item = await getValueFromStroage(['destinations']);
             $('#target_name').val(item.destinations[getTargetIndex()].name);
             document.title = 'Edit Destination';
@@ -30,6 +30,7 @@ async function init() {
 
 async function continueButtonClicked() {
     let targetIndex = 0;
+    
     if (isSource()) {
         const item = await getValueFromStroage(['sources']);
 
@@ -40,13 +41,15 @@ async function continueButtonClicked() {
                 }]
             });
         } else {
-            targetIndex = getTargetIndex() || item.sources.length;
+            targetIndex = getTargetIndex() === null ? 
+                item.sources.length : 
+                getTargetIndex();
             item.sources[targetIndex] = { 'name': $('#target_name').val() };
             setValueToStorage({'sources': item.sources});
         }
     } else {
         const item = await getValueFromStroage(['destinations']);
-
+        
         if (!item.destinations) {
             setValueToStorage({
                 'destinations': [{
@@ -54,14 +57,13 @@ async function continueButtonClicked() {
                 }]
             });
         } else {
-            targetIndex = getTargetIndex() || item.destinations.length;
+            targetIndex = getTargetIndex() === null ? 
+                item.destinations.length :
+                getTargetIndex();
             item.destinations[targetIndex] = { 'name': $('#target_name').val() };
-            setValueToStorage({'sources': item.destinations});
+            setValueToStorage({'destinations': item.destinations});
         }
     }
     
-    location.href = chrome.extension.getURL(`html/fields.html?
-        target=${getTarget()}&
-        target_index=${targetIndex}&
-        edit=${getEditStatus()}`);
+    location.href = chrome.extension.getURL(`html/fields.html?target=${getTarget()}&target_index=${targetIndex}&edit=${getEditStatus()}`);
 }

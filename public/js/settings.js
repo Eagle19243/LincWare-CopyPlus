@@ -18,15 +18,16 @@ async function initUI() {
 
     sources.forEach((source, index) => {
         const sourceContent =   `<div class="list-group-item bg-blue-grey-500">
-                                    <label class="source-name">${source.name}</label>
+                                    <label class="target-name">${source.name}</label>
                                     <div class="container-buttons">
                                         <a class="btn-edit" data-target-index=${index} data-target="source">
-                                            Edit
-                                            <i class="icon wb-chevron-right" aria-hidden="true"></i>
+                                            <i class="icon wb-pencil" aria-hidden="true"></i>
                                         </a>
                                         <a class="btn-map" data-target-index=${index} data-target="source">
-                                            Map
-                                            <i class="icon wb-chevron-right" aria-hidden="true"></i>
+                                            <i class="icon wb-library" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn-remove" data-target-index=${index} data-target="source">
+                                            <i class="icon wb-trash" aria-hidden="true"></i>
                                         </a>
                                     </div>
                                 </div>`;
@@ -35,15 +36,16 @@ async function initUI() {
     
     destinations.forEach((destination, index) => {
         const destinationContent =   `<div class="list-group-item bg-blue-grey-500">
-                                    <label class="source-name">${destination.name}</label>
+                                    <label class="target-name">${destination.name}</label>
                                     <div class="container-buttons">
                                         <a class="btn-edit" data-target-index=${index} data-target="destination">
-                                            Edit
-                                            <i class="icon wb-chevron-right" aria-hidden="true"></i>
+                                            <i class="icon wb-pencil" aria-hidden="true"></i>
                                         </a>
-                                        <a class="btn-map" data-target-index=${index} data-target="destination">>
-                                            Map
-                                            <i class="icon wb-chevron-right" aria-hidden="true"></i>
+                                        <a class="btn-map" data-target-index=${index} data-target="destination">
+                                            <i class="icon wb-library" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="btn-remove" data-target-index=${index} data-target="destination">
+                                            <i class="icon wb-trash" aria-hidden="true"></i>
                                         </a>
                                     </div>
                                 </div>`;
@@ -52,6 +54,7 @@ async function initUI() {
 
     $('.btn-edit').click(editButtonClicked);
     $('.btn-map').click(mapButtonClicked);
+    $('.btn-remove').click(removeButtonClicked);
 }
 
 function closeButtonClicked() {
@@ -61,22 +64,33 @@ function closeButtonClicked() {
 function editButtonClicked(e) {
     const targetIndex  = $(e.currentTarget).data('target-index');
     const target       = $(e.currentTarget).data('target');
-    location.href = chrome.extension.getURL(`html/target.html?
-        target=${target}&
-        target_index=${targetIndex}&
-        edit=${true}`);
+    location.href = chrome.extension.getURL(`html/target.html?target=${target}&target_index=${targetIndex}&edit=true`);
 }
 
-function mapButtonClicked(e) {
-    
+function mapButtonClicked(e) {   
+}
+
+async function removeButtonClicked(e) {
+    const targetIndex  = $(e.currentTarget).data('target-index');
+    const target = $(e.currentTarget).data('target');
+
+    if (target === 'source') {
+        const item = await getValueFromStroage(['sources']);
+        item.sources.splice(targetIndex, 1);
+        setValueToStorage({'sources': item.sources});
+    } else {
+        const item = await getValueFromStroage(['destinations']);
+        item.destinations.splice(targetIndex, 1);
+        setValueToStorage({'destinations': item.destinations});
+    }
+
+    location.reload();
 }
 
 function addSourceButtonClicked() {
-    location.href = chrome.extension.getURL(`html/target.html?
-        target=source`);
+    location.href = chrome.extension.getURL(`html/target.html?target=source`);
 }
 
 function addDestinationButtonClicked() {
-    location.href = chrome.extension.getURL(`html/target.html?
-        target=destination`);
+    location.href = chrome.extension.getURL(`html/target.html?target=destination`);
 }

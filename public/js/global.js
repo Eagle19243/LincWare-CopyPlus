@@ -33,7 +33,6 @@ function getValueFromStroage(keys) {
 function isSource() {
     let url = new URL(location.href);
     let target = url.searchParams.get('target');
-    
     return target === 'source';
 }
 
@@ -43,12 +42,13 @@ function getTarget() {
 
 function getTargetIndex() {
     const url = new URL(location.href);
-    return url.searchParams.get('target_index');
+    const targetIndex = url.searchParams.get('target_index');
+    return targetIndex ? Number(targetIndex) : null;
 }
 
 function getEditStatus() {
     const url = new URL(location.href);
-    return url.searchParams.get('edit');
+    return url.searchParams.get('edit') === 'true';
 }
 
 function getFieldIndex() {
