@@ -13,14 +13,14 @@ function backButtonClicked() {
 }
 
 async function saveButtonClicked() {
+    const items = await getValueFromStroage(['sources', 'destinations']);
+
     if (isSource()) {
-        const item = await getValueFromStroage(['sources']);
-        item.sources[getTargetIndex()].url = $('#target_url').html();
-        setValueToStorage({'sources': item.sources});
+        items.sources[getTargetIndex()].url = $('#target_url').html();
+        setValueToStorage({'sources': items.sources});
     } else {
-        const item = await getValueFromStroage(['destinations']);
-        item.destinations[getTargetIndex()].url = $('#target_url').html();
-        setValueToStorage({'destinations': item.destinations});
+        items.destinations[getTargetIndex()].url = $('#target_url').html();
+        setValueToStorage({'destinations': items.destinations});
     }
 
     location.href = chrome.extension.getURL(`html/settings.html?target=${getTarget()}&target_index=${getTargetIndex()}`);
@@ -28,42 +28,40 @@ async function saveButtonClicked() {
 
 function editButtonClicked(e) {
     const fieldIndex = $(this).data('index');
-    location.href = chrome.extension.getURL(`html/field-settings.html?target=${getTarget()}&field_index=${fieldIndex}&target_index=${getTargetIndex()}`);
+    location.href    = chrome.extension.getURL(`html/field-settings.html?target=${getTarget()}&field_index=${fieldIndex}&target_index=${getTargetIndex()}`);
 }
 
 async function initUI() {
     const activeTab = await getActiveTab();
-    let item = null;
+    const items      = await getValueFromStroage(['sources', 'destinations']);
 
     if (isSource()) {
-        item           = await getValueFromStroage(['sources']);
-        const name     = item.sources[getTargetIndex()].name;
+        const name     = items.sources[getTargetIndex()].name;
 
         $('.title').html(`${name} Fields`);
         $('#lbl_target_url').html('Source URL');
 
         if (getEditStatus()) {
-            $('#form_name').html(item.sources[getTargetIndex()].form_name);
-            $('#target_url').html(item.sources[getTargetIndex()].url);
+            $('#form_name').html(items.sources[getTargetIndex()].form_name);
+            $('#target_url').html(items.sources[getTargetIndex()].url);
         } else {
             const response = await sendMessageToTab(activeTab.id, {action: 'Get_Form_Name'});
-            item.sources[getTargetIndex()].form_name = response.form_name;
+            items.sources[getTargetIndex()].form_name = response.form_name;
             $('#form_name').html(response.form_name);
             $('#target_url').html(activeTab.url);
         }
     } else {
-        item           = await getValueFromStroage(['destinations']);
-        const name     = item.destinations[getTargetIndex()].name;
+        const name     = items.destinations[getTargetIndex()].name;
 
         $('.title').html(`${name} Fields`);
         $('#lbl_target_url').html('Destination URL');
 
         if (getEditStatus()) {
-            $('#form_name').html(item.destinations[getTargetIndex()].form_name);
-            $('#target_url').html(item.destinations[getTargetIndex()].url);
+            $('#form_name').html(items.destinations[getTargetIndex()].form_name);
+            $('#target_url').html(items.destinations[getTargetIndex()].url);
         } else {
             const response = await sendMessageToTab(activeTab.id, {action: 'Get_Form_Name'});
-            item.sources[getTargetIndex()].form_name = response.form_name;
+            items.destinations[getTargetIndex()].form_name = response.form_name;
             $('#form_name').html(response.form_name);
             $('#target_url').html(activeTab.url);
         }
@@ -73,8 +71,8 @@ async function initUI() {
 
     if (getEditStatus()) {
         const data = isSource() ? 
-            item.sources[getTargetIndex()] : 
-            item.destinations[getTargetIndex()];
+            items.sources[getTargetIndex()] : 
+            items.destinations[getTargetIndex()];
         
         for (const key in data) {
             if (key.indexOf('field') > -1) {
@@ -102,15 +100,15 @@ async function initUI() {
         $('.btn-edit').click(editButtonClicked);
         
         if (isSource()) {
-            item.sources[getTargetIndex()][`field_${i}`] = field;
+            items.sources[getTargetIndex()][`field_${i}`] = field;
         } else {
-            item.destinations[getTargetIndex()][`field_${i}`] = field;
+            items.destinations[getTargetIndex()][`field_${i}`] = field;
         }
     });
 
     if (isSource()) {
-        setValueToStorage({'sources': item.sources});
+        setValueToStorage({'sources': items.sources});
     } else {
-        setValueToStorage({'destinations': item.destinations});
+        setValueToStorage({'destinations': items.destinations});
     }
 }

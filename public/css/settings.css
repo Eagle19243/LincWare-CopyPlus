@@ -34,3 +34,9 @@
 .list-group .list-group-item .icon {
     float: right;
 }
+.footer .btn-map {
+    float: left;
+}
+.footer .btn-close {
+    float: right;
+}

@@ -5,16 +5,16 @@ window.onload = () => {
 function init() {
     $('.btn-add-source').click(addSourceButtonClicked);
     $('.btn-add-destination').click(addDestinationButtonClicked);
+    $('.btn-map').click(mapButtonClicked);
     $('.btn-close').click(closeButtonClicked);
 
     initUI();
 }
 
 async function initUI() {
-    const item_sources      = await getValueFromStroage(['sources']);
-    const item_destinations = await getValueFromStroage(['destinations']);
-    const sources           = item_sources.sources || [];
-    const destinations      = item_destinations.destinations || [];
+    const items             = await getValueFromStroage(['sources', 'destinations']);
+    const sources           = items.sources || [];
+    const destinations      = items.destinations || [];
 
     sources.forEach((source, index) => {
         const sourceContent =   `<div class="list-group-item bg-blue-grey-500">
@@ -22,9 +22,6 @@ async function initUI() {
                                     <div class="container-buttons">
                                         <a class="btn-edit" data-target-index=${index} data-target="source">
                                             <i class="icon wb-pencil" aria-hidden="true"></i>
-                                        </a>
-                                        <a class="btn-map" data-target-index=${index} data-target="source">
-                                            <i class="icon wb-library" aria-hidden="true"></i>
                                         </a>
                                         <a class="btn-remove" data-target-index=${index} data-target="source">
                                             <i class="icon wb-trash" aria-hidden="true"></i>
@@ -41,9 +38,6 @@ async function initUI() {
                                         <a class="btn-edit" data-target-index=${index} data-target="destination">
                                             <i class="icon wb-pencil" aria-hidden="true"></i>
                                         </a>
-                                        <a class="btn-map" data-target-index=${index} data-target="destination">
-                                            <i class="icon wb-library" aria-hidden="true"></i>
-                                        </a>
                                         <a class="btn-remove" data-target-index=${index} data-target="destination">
                                             <i class="icon wb-trash" aria-hidden="true"></i>
                                         </a>
@@ -53,7 +47,6 @@ async function initUI() {
     });
 
     $('.btn-edit').click(editButtonClicked);
-    $('.btn-map').click(mapButtonClicked);
     $('.btn-remove').click(removeButtonClicked);
 }
 
@@ -67,21 +60,21 @@ function editButtonClicked(e) {
     location.href = chrome.extension.getURL(`html/target.html?target=${target}&target_index=${targetIndex}&edit=true`);
 }
 
-function mapButtonClicked(e) {   
+function mapButtonClicked(e) {
+    location.href = chrome.extension.getURL(`html/map-target.html`);
 }
 
 async function removeButtonClicked(e) {
     const targetIndex  = $(e.currentTarget).data('target-index');
     const target = $(e.currentTarget).data('target');
-
+    const items =  await getValueFromStroage(['sources', 'destinations']);
+    
     if (target === 'source') {
-        const item = await getValueFromStroage(['sources']);
-        item.sources.splice(targetIndex, 1);
-        setValueToStorage({'sources': item.sources});
+        items.sources.splice(targetIndex, 1);
+        setValueToStorage({'sources': items.sources});
     } else {
-        const item = await getValueFromStroage(['destinations']);
-        item.destinations.splice(targetIndex, 1);
-        setValueToStorage({'destinations': item.destinations});
+        items.destinations.splice(targetIndex, 1);
+        setValueToStorage({'destinations': items.destinations});
     }
 
     location.reload();

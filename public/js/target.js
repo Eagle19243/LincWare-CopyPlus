@@ -3,10 +3,11 @@ window.onload = () => {
 }
 
 async function init() {
+    const items = await getValueFromStroage(['sources', 'destinations']);
+
     if (isSource()) {
         if (getEditStatus()) {
-            const item = await getValueFromStroage(['sources']);
-            $('#target_name').val(item.sources[getTargetIndex()].name);
+            $('#target_name').val(items.sources[getTargetIndex()].name);
             document.title = 'Edit Source';
             $('.title').html('Edit Source');
         } else {
@@ -15,8 +16,7 @@ async function init() {
         }
     } else {
         if (getEditStatus()) {
-            const item = await getValueFromStroage(['destinations']);
-            $('#target_name').val(item.destinations[getTargetIndex()].name);
+            $('#target_name').val(items.destinations[getTargetIndex()].name);
             document.title = 'Edit Destination';
             $('.title').html('Edit Destination');
         } else {
@@ -30,11 +30,10 @@ async function init() {
 
 async function continueButtonClicked() {
     let targetIndex = 0;
-    
-    if (isSource()) {
-        const item = await getValueFromStroage(['sources']);
+    const items = await getValueFromStroage(['sources', 'destinations']);
 
-        if (!item.sources) {
+    if (isSource()) {
+        if (!items.sources) {
             setValueToStorage({
                 'sources': [{
                     'name': $('#target_name').val()
@@ -42,15 +41,13 @@ async function continueButtonClicked() {
             });
         } else {
             targetIndex = getTargetIndex() === null ? 
-                item.sources.length : 
+                items.sources.length : 
                 getTargetIndex();
-            item.sources[targetIndex] = { 'name': $('#target_name').val() };
-            setValueToStorage({'sources': item.sources});
+            items.sources[targetIndex] = { 'name': $('#target_name').val() };
+            setValueToStorage({'sources': items.sources});
         }
-    } else {
-        const item = await getValueFromStroage(['destinations']);
-        
-        if (!item.destinations) {
+    } else {        
+        if (!items.destinations) {
             setValueToStorage({
                 'destinations': [{
                     'name': $('#target_name').val()
@@ -58,10 +55,10 @@ async function continueButtonClicked() {
             });
         } else {
             targetIndex = getTargetIndex() === null ? 
-                item.destinations.length :
+                items.destinations.length :
                 getTargetIndex();
-            item.destinations[targetIndex] = { 'name': $('#target_name').val() };
-            setValueToStorage({'destinations': item.destinations});
+            items.destinations[targetIndex] = { 'name': $('#target_name').val() };
+            setValueToStorage({'destinations': items.destinations});
         }
     }
     

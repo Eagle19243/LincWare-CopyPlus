@@ -1,0 +1,44 @@
+.container {
+    width: 500px !important;
+    height: auto !important;
+    padding: 20px !important;
+}
+.container .header {
+    border: 1px solid transparent;
+    border-bottom-color: rgba(0,0,0,.075);
+    margin-bottom: 15px;
+}
+.body .container-targets {
+    display: flex;
+}
+.body .container-targets fieldset {
+    width: 50% !important;
+    border: 1px solid !important;
+    padding: 10px !important;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+}
+.body .container-targets fieldset legend {
+    width: auto !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    margin-bottom: 0px !important;
+    font-size: 14px !important;
+}
+.body .container-targets fieldset .input-item {
+    display: flex;
+    align-items: center;
+}
+.body .container-targets fieldset .input-item input[type=radio] {
+    margin: 0px !important;
+}
+.body .container-targets fieldset .input-item label {
+    margin-left: 10px !important;
+    margin-bottom: 0px !important;
+}
+.footer .btn-back {
+    float: left;
+}
+.footer .btn-continue {
+    float: right;
+}

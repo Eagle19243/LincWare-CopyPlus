@@ -55,3 +55,15 @@ function getFieldIndex() {
     const url = new URL(location.href);
     return url.searchParams.get('field_index');
 }
+
+function getSourceIndex() {
+    const url = new URL(location.href);
+    const targetIndex = url.searchParams.get('source');
+    return targetIndex ? Number(targetIndex) : null;
+}
+
+function getDestinationIndex() {
+    const url = new URL(location.href);
+    const targetIndex = url.searchParams.get('destination');
+    return targetIndex ? Number(targetIndex) : null;
+}

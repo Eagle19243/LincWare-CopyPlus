@@ -3,15 +3,10 @@ window.onload = () => {
 }
 
 async function init() {
-    let storage = null;
-
-    if (isSource()) {
-        const item = await getValueFromStroage(['sources']);
-        storage    = item.sources[getTargetIndex()];
-    } else {
-        const item = await getValueFromStroage(['destinations']);
-        storage    = item.destinations[getTargetIndex()];
-    }
+    const items   = await getValueFromStroage(['sources', 'destinations']);
+    const storage = isSource() ? 
+                        items.sources[getTargetIndex()]:
+                        items.destinations[getTargetIndex()];
 
     if (isSource()) {
         $('.container-overwrite').hide();
@@ -19,24 +14,17 @@ async function init() {
         $('.container-overwrite').show();
     }
 
-    $('.btn-save').click(saveButtonClicked);
-
     $('#field_value').val(storage[`field_${getFieldIndex()}`].value);
     $('#field_label').val(storage[`field_${getFieldIndex()}`].name);
     $('#field_id').val(storage[`field_${getFieldIndex()}`].id);
     $('#field_type').val(storage[`field_${getFieldIndex()}`].type);
+
+    $('.btn-save').click(saveButtonClicked);
 }
 
 async function saveButtonClicked() {
-    let item = null;
-
-    if (isSource()) {
-        item = await getValueFromStroage(['sources']);
-    } else {
-        item = await getValueFromStroage(['destinations']);
-    }
-    
-    const obj = {
+    const items = await getValueFromStroage(['sources', 'destinations']);
+    const obj   = {
         name: $('#field_label').val(),
         id: $('#field_id').val(),
         value: $('#field_value').val(),
@@ -44,11 +32,11 @@ async function saveButtonClicked() {
     };
 
     if (isSource()) {
-        item.sources[getTargetIndex()][`field_${getFieldIndex()}`] = obj;
-        setValueToStorage({'sources': item.sources});
+        items.sources[getTargetIndex()][`field_${getFieldIndex()}`] = obj;
+        setValueToStorage({'sources': items.sources});
     } else {
-        item.destinations[getTargetIndex()][`field_${getFieldIndex()}`] = obj;
-        setValueToStorage({'destinations': item.destinations});
+        items.destinations[getTargetIndex()][`field_${getFieldIndex()}`] = obj;
+        setValueToStorage({'destinations': items.destinations});
     }
 
     location.href = chrome.extension.getURL(`html/fields.html?target=${getTarget()}&target_index=${getTargetIndex()}`);

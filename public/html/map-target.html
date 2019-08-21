@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>Map</title>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="../vendors/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendors/bootstrap/bootstrap-extend.min.css">
+    <link rel="stylesheet" href="../fonts/web-icons/web-icons.min.css">
+    <link rel="stylesheet" href="../css/map-target.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header text-center font-size-24">
+            <label class="title">Field Mapping</label>
+        </div>
+        <div class="body text-center">
+            <div class="container-targets">
+                <fieldset id="sources">
+                    <legend>Sources</legend>
+                </fieldset>
+                <fieldset id="destinations">
+                    <legend>Destinations</legend>
+                </fieldset>
+            </div>
+            <div><label>Choose one Source and one Destination</label></div>
+        </div>
+        <div class="footer">
+            <button type="button" class="btn btn-info btn-back">
+                <i class="icon wb-chevron-left" aria-hidden="true"></i>
+                Back
+            </button>
+            <button type="button" class="btn btn-primary btn-continue">
+                Continue
+                <i class="icon wb-chevron-right" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <!-- Scripts -->
+    <script src="../vendors/jquery/jquery.min.js"></script>
+    <script src="../vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="../js/global.js"></script>
+    <script src="../js/map-target.js"></script>
+</body>
+</html>

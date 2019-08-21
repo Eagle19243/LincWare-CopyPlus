@@ -1,11 +1,23 @@
 init();
 
 function init() {
-    chrome.browserAction.setPopup({popup: "html/settings.html"});
     chrome.browserAction.onClicked.addListener(onBrowserActionClicked);
     chrome.tabs.onActivated.addListener(onTabActivated);
     chrome.tabs.onUpdated.addListener(onTabUpdated);
     chrome.runtime.onMessage.addListener(handleMessage);
+    setPopup();
+}
+
+async function setPopup() {
+    const items = await getValueFromStroage(['copied', 'map']);
+    const copied = items.copied;
+    const map = items.map || {};
+
+    if (copied) {
+        chrome.browserAction.setPopup({popup: "html/paste.html"});
+    } else {
+        chrome.browserAction.setPopup({popup: "html/settings.html"});
+    }
 }
 
 /**

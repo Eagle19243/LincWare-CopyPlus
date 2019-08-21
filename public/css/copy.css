@@ -3,8 +3,3 @@
     height: auto !important;
     padding: 20px !important;
 }
-.container .header {
-    border: 1px solid transparent;
-    border-bottom-color: rgba(0,0,0,.075);
-    margin-bottom: 15px;
-}
