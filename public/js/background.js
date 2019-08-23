@@ -5,24 +5,36 @@ function init() {
     chrome.tabs.onActivated.addListener(onTabActivated);
     chrome.tabs.onUpdated.addListener(onTabUpdated);
     chrome.runtime.onMessage.addListener(handleMessage);
+    
+    setValueToStorage({'map': {}});
+    setValueToStorage({'sources': []});
+    setValueToStorage({'destinations': []});
+    clearCache();
+
 }
 
 async function setPopup() {
-    const activeTab                    = await getActiveTab();
-    const items                        = await getValueFromStroage(['cache']);
-    const isURLRegisteredAsSource      = await isURLRegisteredAsSourceInMap(activeTab.url);
-    const isURLRegisteredAsDestination = await isURLRegisteredAsDestinationInMap(activeTab.url);
-    const isCopied                     = items.cache ? items.cache.is_copied: false;
-    const copiedURL                    = items.cache ? items.cache.url: "";
+    const activeTab                         = await getActiveTab();
+    const items                             = await getValueFromStroage(['cache']);
+    const isRegisteredAsSource              = await isURLRegisteredAsSource(activeTab.url);
+    const isRegisteredAsDestination         = await isURLRegisteredAsDestination(activeTab.url);
+    const isRegisteredAsSourceInMap         = await isURLRegisteredAsSourceInMap(activeTab.url);
+    const isRegisteredAsDestinationInMap    = await isURLRegisteredAsDestinationInMap(activeTab.url);
+    const isCopied                          = items.cache ? items.cache.is_copied: false;
+    const copiedURL                         = items.cache ? items.cache.url: "";
     
     let sourceURL = "";
-    if (isURLRegisteredAsDestination) {
+    if (isRegisteredAsDestination && isRegisteredAsDestinationInMap) {
         sourceURL = await getSourceURLByDestinationURLInMap(activeTab.url);
     }
 
-    if (isURLRegisteredAsDestination && isCopied && copiedURL === sourceURL) {
+    if (isRegisteredAsDestination && 
+        isRegisteredAsDestinationInMap && 
+        isCopied && 
+        copiedURL === sourceURL) {
+
         chrome.browserAction.setPopup({popup: "html/paste.html"});
-    } else if (isURLRegisteredAsSource) {
+    } else if (isRegisteredAsSource && isRegisteredAsSourceInMap) {
         chrome.browserAction.setPopup({popup: "html/copy.html"});
     } else {
         chrome.browserAction.setPopup({popup: "html/settings.html"});

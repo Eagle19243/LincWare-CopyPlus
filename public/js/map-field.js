@@ -74,4 +74,5 @@ async function saveButtonClicked() {
 
     map[`${getSourceIndex()}-${getDestinationIndex()}`] = fields_map;
     setValueToStorage({'map': map});
+    window.close();
 }

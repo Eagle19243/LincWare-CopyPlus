@@ -68,6 +68,28 @@ function getDestinationIndex() {
     return targetIndex ? Number(targetIndex) : null;
 }
 
+async function isURLRegisteredAsSource(url) {
+    const items     = await getValueFromStroage(['sources']);
+    const sources   = items.sources || [];
+
+    const sourceIndex    = sources.findIndex((source) => {
+        return source.url === url;
+    });
+
+    return sourceIndex === null ? false: true;
+}
+
+async function isURLRegisteredAsDestination(url) {
+    const items          = await getValueFromStroage(['destinations']);
+    const destinations   = items.destinations || [];
+
+    const destinationIndex    = destinations.findIndex((destination) => {
+        return destination.url === url;
+    });
+
+    return destinationIndex === null ? false: true;
+}
+
 async function isURLRegisteredAsSourceInMap(url) {
     const items     = await getValueFromStroage(['map', 'sources']);
     const map       = items.map || {};
