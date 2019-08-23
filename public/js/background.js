@@ -5,16 +5,25 @@ function init() {
     chrome.tabs.onActivated.addListener(onTabActivated);
     chrome.tabs.onUpdated.addListener(onTabUpdated);
     chrome.runtime.onMessage.addListener(handleMessage);
-    setPopup();
 }
 
 async function setPopup() {
-    const items = await getValueFromStroage(['copied', 'map']);
-    const copied = items.copied;
-    const map = items.map || {};
+    const activeTab                    = await getActiveTab();
+    const items                        = await getValueFromStroage(['cache']);
+    const isURLRegisteredAsSource      = await isURLRegisteredAsSourceInMap(activeTab.url);
+    const isURLRegisteredAsDestination = await isURLRegisteredAsDestinationInMap(activeTab.url);
+    const isCopied                     = items.cache ? items.cache.is_copied: false;
+    const copiedURL                    = items.cache ? items.cache.url: "";
+    
+    let sourceURL = "";
+    if (isURLRegisteredAsDestination) {
+        sourceURL = await getSourceURLByDestinationURLInMap(activeTab.url);
+    }
 
-    if (copied) {
+    if (isURLRegisteredAsDestination && isCopied && copiedURL === sourceURL) {
         chrome.browserAction.setPopup({popup: "html/paste.html"});
+    } else if (isURLRegisteredAsSource) {
+        chrome.browserAction.setPopup({popup: "html/copy.html"});
     } else {
         chrome.browserAction.setPopup({popup: "html/settings.html"});
     }
@@ -31,9 +40,12 @@ function onBrowserActionClicked(tab) {
  */
 function onTabActivated(activeInfo) {
     enableExtension(false);
+    setPopup();
     chrome.tabs.get(activeInfo.tabId, (tab) => {
         determineExtensionAvailability(tab);
     });
+
+    
 }
 
 /**
@@ -41,6 +53,7 @@ function onTabActivated(activeInfo) {
  */
 function onTabUpdated(tabId, changeInfo, tab) {
     enableExtension(false);
+    setPopup();
     determineExtensionAvailability(tab);
 }
 

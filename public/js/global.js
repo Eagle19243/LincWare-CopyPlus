@@ -67,3 +67,75 @@ function getDestinationIndex() {
     const targetIndex = url.searchParams.get('destination');
     return targetIndex ? Number(targetIndex) : null;
 }
+
+async function isURLRegisteredAsSourceInMap(url) {
+    const items     = await getValueFromStroage(['map', 'sources']);
+    const map       = items.map || {};
+    const sources   = items.sources || [];
+    
+    const sourceIndex    = sources.findIndex((source) => {
+        return source.url === url;
+    });
+
+    for (key in map) {
+        const tmpArray = key.split('-');
+        if (sourceIndex === Number(tmpArray[0])) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+async function isURLRegisteredAsDestinationInMap(url) {
+    const items        = await getValueFromStroage(['map', 'destinations']);
+    const map          = items.map || {};
+    const destinations = items.destinations || [];
+
+    const destinationIndex    = destinations.findIndex((destination) => {
+        return destination.url === url;
+    });
+
+    for (key in map) {
+        const tmpArray = key.split('-');
+        if (destinationIndex === Number(tmpArray[1])) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+async function getSourceURLByDestinationURLInMap(url) {
+    const items        = await getValueFromStroage(['map', 'destinations', 'sources']);
+    const map          = items.map || {};
+    const destinations = items.destinations || [];
+    const sources      = items.sources || [];
+
+    const destinationIndex    = destinations.findIndex((destination) => {
+        return destination.url === url;
+    });
+
+    let sourceIndex = null;
+
+    for (key in map) {
+        const tmpArray = key.split('-');
+        if (destinationIndex === Number(tmpArray[1])) {
+            sourceIndex = Number(tmpArray[0]);
+        }
+    }
+
+    if (!sourceIndex) {
+        return null;
+    }
+
+    return sources[sourceIndex];
+}
+
+async function clearCache() {
+    setValueToStorage({'cache': {
+        is_copied: false,
+        url: "",
+        data: []
+    }});
+}

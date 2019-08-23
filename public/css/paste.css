@@ -8,3 +8,12 @@
     border-bottom-color: rgba(0,0,0,.075);
     margin-bottom: 15px;
 }
+.header-data-to-paste {
+    margin-top: 10px;
+}
+.body-data-to-paste {
+    display: grid;
+}
+.container-status {
+    display: none;
+}

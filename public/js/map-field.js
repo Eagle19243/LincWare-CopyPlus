@@ -22,7 +22,7 @@ async function initUI() {
     for (const key in source) {
         if (key.indexOf('field') > -1) {
             const content = `<div class="input-item">
-                                <label class="lbl-source-name" data-field="${key}">
+                                <label class="lbl-source-name" data-field-name="${source[key].name}">
                                     ${source[key].name}
                                 </label>
                              </div>`;
@@ -33,7 +33,7 @@ async function initUI() {
     for (const key in destination) {
         if (key.indexOf('field') > -1) {
             const content = `<div class="input-item">
-                                <label class="lbl-destination-name" data-field="${key}">
+                                <label class="lbl-destination-name" data-field-name="${destination[key].name}">
                                     ${destination[key].name}
                                 </label>
                              </div>`;
@@ -49,8 +49,8 @@ async function initUI() {
         accept: ".lbl-destination-name",
         drop: function (event, element) {
             const obj = {
-                source: $(this).data('field'),
-                destination: $(element.draggable).data('field')
+                source: $(this).data('field-name'),
+                destination: $(element.draggable).data('field-name')
             }
 
             $(this).css('background-color', '#4CAF50');

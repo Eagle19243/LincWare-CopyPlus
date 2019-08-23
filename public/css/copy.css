@@ -3,3 +3,12 @@
     height: auto !important;
     padding: 20px !important;
 }
+.container-status {
+    display: none;
+}
+.status {
+    font-size: 20px;
+}
+.open-destination {
+    font-size: 16px;
+}
