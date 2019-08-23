@@ -46,14 +46,14 @@ async function getDataToCopy(url) {
     for (key in map) {
         const tmpArray = key.split('-');
         if (sourceIndex === Number(tmpArray[0])) {
-            map[key].forEach((obj) => {
+            for (const obj of map[key]) {
                 const response = await sendMessageToTab(activeTab.id, {
                     action: 'Get_Field_Value', 
                     field_name: obj.source
                 });
                 obj.value = response.field_value;
                 data.push(obj);
-            });
+            }
         }
     }
 

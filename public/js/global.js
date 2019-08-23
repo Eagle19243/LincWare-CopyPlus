@@ -125,11 +125,11 @@ async function getSourceURLByDestinationURLInMap(url) {
         }
     }
 
-    if (!sourceIndex) {
+    if (sourceIndex === null) {
         return null;
     }
-
-    return sources[sourceIndex];
+    
+    return sources[sourceIndex].url;
 }
 
 async function clearCache() {

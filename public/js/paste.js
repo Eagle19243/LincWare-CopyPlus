@@ -30,15 +30,21 @@ async function pasteDate() {
     const items     = await getValueFromStroage(['cache']);
     const data      = items.cache.data  || [];
     
-    data.forEach((obj) => {
+    for (const obj of data) {
         await sendMessageToTab(activeTab.id, {
             action: 'Set_Field_Value',
             field_name: obj.destination,
             field_value: obj.value
         });
-    });
+    }
 }
 
-function initUI() {
-
+async function initUI() {
+    const items     = await getValueFromStroage(['cache']);
+    const data      = items.cache.data  || [];
+    
+    for (const obj of data) {
+        const content = `<label>${obj.source}: ${obj.value}</label>`;
+        $('.body-data-to-paste').append(content);
+    }
 }
