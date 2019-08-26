@@ -23,7 +23,7 @@ async function initUI() {
         if (key.indexOf('field') > -1 && source[key].enabled) {
             const content = `<div class="input-item">
                                 <label class="lbl-source-name" data-field-name="${source[key].name}">
-                                    ${source[key].name}
+                                    ${source[key].label}
                                 </label>
                              </div>`;
             $('#fields_source').append(content);
@@ -34,7 +34,7 @@ async function initUI() {
         if (key.indexOf('field') > -1 && destination[key].enabled) {
             const content = `<div class="input-item">
                                 <label class="lbl-destination-name" data-field-name="${destination[key].name}">
-                                    ${destination[key].name}
+                                    ${destination[key].label}
                                 </label>
                              </div>`;
             $('#fields_destination').append(content);
