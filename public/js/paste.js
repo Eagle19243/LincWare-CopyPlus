@@ -22,6 +22,7 @@ function resetButtonClicked() {
 }
 
 function closeButtonClicked() {
+    chrome.runtime.sendMessage({action: 'Resetup_Popup'});
     window.close();
 }
 

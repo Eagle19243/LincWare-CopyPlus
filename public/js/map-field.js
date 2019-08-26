@@ -69,10 +69,11 @@ function backButtonClicked() {
 }
 
 async function saveButtonClicked() {
-    const item_map = await getValueFromStroage(['map']);
-    const map      = item_map.map || {};
+    const item_map  = await getValueFromStroage(['map']);
+    const map       = item_map.map || {};
 
     map[`${getSourceIndex()}-${getDestinationIndex()}`] = fields_map;
     setValueToStorage({'map': map});
+    chrome.runtime.sendMessage({action: 'Resetup_Popup'});
     window.close();
 }

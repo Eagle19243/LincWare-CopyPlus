@@ -5,8 +5,12 @@ function init() {
     chrome.tabs.onActivated.addListener(onTabActivated);
     chrome.tabs.onUpdated.addListener(onTabUpdated);
     chrome.runtime.onMessage.addListener(handleMessage);
-
+    
+    // setValueToStorage({'map': {}});
+    // setValueToStorage({'sources': []});
+    // setValueToStorage({'destinations': []});
     clearCache();
+
 }
 
 async function setPopup() {
@@ -69,6 +73,9 @@ function onTabUpdated(tabId, changeInfo, tab) {
  * Handle messages from content.js
  */
 function handleMessage(request, sender, sendResponse) {
+    if (request.action === 'Resetup_Popup') {
+        setPopup();
+    }
 }
 
 /**
