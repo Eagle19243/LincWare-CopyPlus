@@ -1,6 +1,6 @@
 {
     "name": "LincWare CopyPlus",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "The basic idea of this Chrome extension is to be able to copy data from one HTML form(Source) to another HTML form(Destination).",
     "manifest_version": 2,
     "icons": {
