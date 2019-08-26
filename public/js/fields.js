@@ -34,7 +34,7 @@ function editButtonClicked(e) {
 async function initUI() {
     const activeTab = await getActiveTab();
     const items      = await getValueFromStroage(['sources', 'destinations']);
-
+    
     if (isSource()) {
         const name     = items.sources[getTargetIndex()].name;
 
@@ -73,7 +73,6 @@ async function initUI() {
         const data = isSource() ? 
             items.sources[getTargetIndex()] : 
             items.destinations[getTargetIndex()];
-        
         for (const key in data) {
             if (key.indexOf('field') > -1) {
                 fields.push(data[key]);

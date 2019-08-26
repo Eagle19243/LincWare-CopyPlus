@@ -7,8 +7,8 @@ function init() {
     chrome.runtime.onMessage.addListener(handleMessage);
     
     setValueToStorage({'map': {}});
-    setValueToStorage({'sources': []});
-    setValueToStorage({'destinations': []});
+    // setValueToStorage({'sources': []});
+    // setValueToStorage({'destinations': []});
     clearCache();
 
 }

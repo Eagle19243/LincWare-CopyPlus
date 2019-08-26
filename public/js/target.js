@@ -32,6 +32,11 @@ async function continueButtonClicked() {
     let targetIndex = 0;
     const items = await getValueFromStroage(['sources', 'destinations']);
 
+    if (getEditStatus()) {
+        location.href = chrome.extension.getURL(`html/fields.html?target=${getTarget()}&target_index=${targetIndex}&edit=${getEditStatus()}`);
+        return;
+    }
+
     if (isSource()) {
         if (!items.sources) {
             setValueToStorage({
