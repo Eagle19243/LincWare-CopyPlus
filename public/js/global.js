@@ -71,12 +71,12 @@ function getDestinationIndex() {
 async function isURLRegisteredAsSource(url) {
     const items     = await getValueFromStroage(['sources']);
     const sources   = items.sources || [];
-
+    
     const sourceIndex    = sources.findIndex((source) => {
         return source.url === url;
     });
-
-    return sourceIndex === null ? false: true;
+    
+    return (sourceIndex === null || sourceIndex === -1) ? false: true;
 }
 
 async function isURLRegisteredAsDestination(url) {
@@ -87,7 +87,7 @@ async function isURLRegisteredAsDestination(url) {
         return destination.url === url;
     });
 
-    return destinationIndex === null ? false: true;
+    return (destinationIndex === null || destinationIndex === -1) ? false: true;
 }
 
 async function isURLRegisteredAsSourceInMap(url) {

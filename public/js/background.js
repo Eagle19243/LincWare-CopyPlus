@@ -6,9 +6,9 @@ function init() {
     chrome.tabs.onUpdated.addListener(onTabUpdated);
     chrome.runtime.onMessage.addListener(handleMessage);
     
-    // setValueToStorage({'map': {}});
-    // setValueToStorage({'sources': []});
-    // setValueToStorage({'destinations': []});
+    setValueToStorage({'map': {}});
+    setValueToStorage({'sources': []});
+    setValueToStorage({'destinations': []});
     clearCache();
 
 }

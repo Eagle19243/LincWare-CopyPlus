@@ -12,9 +12,17 @@ function init() {
 }
 
 async function initUI() {
-    const items             = await getValueFromStroage(['sources', 'destinations']);
-    const sources           = items.sources || [];
-    const destinations      = items.destinations || [];
+    const items                     = await getValueFromStroage(['sources', 'destinations']);
+    const activeTab                 = await getActiveTab();
+    const isRegisteredAsSource      = await isURLRegisteredAsSource(activeTab.url);
+    const isRegisteredAsDestination = await isURLRegisteredAsDestination(activeTab.url);
+    const sources                   = items.sources || [];
+    const destinations              = items.destinations || [];
+    
+    if (isRegisteredAsSource || isRegisteredAsDestination) {
+        $('.btn-add-source').hide();
+        $('.btn-add-destination').hide();
+    }
 
     sources.forEach((source, index) => {
         const sourceContent =   `<div class="list-group-item bg-blue-grey-500">
