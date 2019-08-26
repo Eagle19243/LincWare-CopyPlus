@@ -51,7 +51,7 @@ function onBrowserActionClicked(tab) {
  * Event when tab activated/focused
  */
 function onTabActivated(activeInfo) {
-    enableExtension(false);
+    // enableExtension(false);
     setPopup();
     chrome.tabs.get(activeInfo.tabId, (tab) => {
         // determineExtensionAvailability(tab);
@@ -64,7 +64,7 @@ function onTabActivated(activeInfo) {
  * Event when tab updated
  */
 function onTabUpdated(tabId, changeInfo, tab) {
-    enableExtension(false);
+    // enableExtension(false);
     setPopup();
     // determineExtensionAvailability(tab);
 }

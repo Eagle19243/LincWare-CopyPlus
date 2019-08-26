@@ -14,11 +14,14 @@ function handleMessage(request, sender, sendResponse) {
         
         elements.each((i) => {
             // console.log($(elements[i]).closest('tr').find('td[nowrap="nowrap"]').html());
+            const value = $(elements[i]).attr('type') === 'checkbox' ?
+                            $(elements[i]).is(':checked') :
+                            $(elements[i]).val();
             const obj = {
                 name: $(elements[i]).attr('name'),
                 label: $(elements[i]).attr('name'),
                 id: $(elements[i]).attr('id'),
-                value: $(elements[i]).val(),
+                value: value,
                 type: $(elements[i]).attr('type') || $(elements[i]).prop('tagName').toLowerCase()
             }
             fields.push(obj);
@@ -31,7 +34,14 @@ function handleMessage(request, sender, sendResponse) {
         const value = $(`form input[name=${request.field_name}], form select[name=${request.field_name}], form textarea[name=${request.field_name}]`).val();
         sendResponse({field_value: value});
     } else if (request.action === 'Set_Field_Value') {
-        $(`form input[name=${request.field_name}], form select[name=${request.field_name}], form textarea[name=${request.field_name}]`).val(request.field_value);
+        const element = $(`form input[name=${request.field_name}], form select[name=${request.field_name}], form textarea[name=${request.field_name}]`);
+        
+        if (element.attr('type') === 'checkbox') {
+            element.prop('checked', request.field_value);
+        } else {
+            element.val(request.field_value);
+        }
+        
         sendResponse({success: true});
     }   
 }
