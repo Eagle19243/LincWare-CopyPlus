@@ -46,7 +46,7 @@ async function saveButtonClicked() {
 
 function editButtonClicked(e) {
     const fieldIndex = $(this).data('index');
-    location.href    = chrome.extension.getURL(`html/field-settings.html?target=${getTarget()}&field_index=${fieldIndex}&target_index=${getTargetIndex()}`);
+    location.href    = chrome.extension.getURL(`html/field-settings.html?target=${getTarget()}&field_index=${fieldIndex}&target_index=${getTargetIndex()}&edit=${getEditStatus()}`);
 }
 
 async function initUI() {
@@ -100,13 +100,13 @@ async function initUI() {
         const response = await sendMessageToTab(activeTab.id, {action: 'Get_Fields'});
         fields = response.fields;
     }
-
+    
     fields.forEach((field, i) => {
         const content = `<div class="input-item" id="field_${i}"> \
                             <div class="checkbox-custom checkbox-primary"> \
                                 <input type="checkbox" checked /> \
                             </div> \
-                            <input type="text" class="form-control" value="${field.name}" readonly> \
+                            <input type="text" class="form-control" value="${field.label}" readonly> \
                             <button type="button" class="btn btn-icon btn-default btn-edit" data-index=${i}> \
                                 <i class="icon wb-pencil" aria-hidden="true"></i> \
                             </button> \

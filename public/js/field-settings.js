@@ -14,8 +14,9 @@ async function init() {
         $('.container-overwrite').show();
     }
 
+    $('#field_name').val(storage[`field_${getFieldIndex()}`].name);
     $('#field_value').val(storage[`field_${getFieldIndex()}`].value);
-    $('#field_label').val(storage[`field_${getFieldIndex()}`].name);
+    $('#field_label').val(storage[`field_${getFieldIndex()}`].label);
     $('#field_id').val(storage[`field_${getFieldIndex()}`].id);
     $('#field_type').val(storage[`field_${getFieldIndex()}`].type);
 
@@ -25,12 +26,13 @@ async function init() {
 async function saveButtonClicked() {
     const items = await getValueFromStroage(['sources', 'destinations']);
     const obj   = {
-        name: $('#field_label').val(),
+        name: $('#field_name').val(),
+        label: $('#field_label').val(),
         id: $('#field_id').val(),
         value: $('#field_value').val(),
         type: $('#field_type').val()
     };
-
+    
     if (isSource()) {
         items.sources[getTargetIndex()][`field_${getFieldIndex()}`] = obj;
         setValueToStorage({'sources': items.sources});
@@ -39,5 +41,5 @@ async function saveButtonClicked() {
         setValueToStorage({'destinations': items.destinations});
     }
 
-    location.href = chrome.extension.getURL(`html/fields.html?target=${getTarget()}&target_index=${getTargetIndex()}`);
+    location.href = chrome.extension.getURL(`html/fields.html?target=${getTarget()}&target_index=${getTargetIndex()}&edit=${getEditStatus()}`);
 }

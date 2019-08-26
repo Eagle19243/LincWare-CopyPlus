@@ -16,6 +16,7 @@ function handleMessage(request, sender, sendResponse) {
             // console.log($(elements[i]).closest('tr').find('td[nowrap="nowrap"]').html());
             const obj = {
                 name: $(elements[i]).attr('name'),
+                label: $(elements[i]).attr('name'),
                 id: $(elements[i]).attr('id'),
                 value: $(elements[i]).val(),
                 type: $(elements[i]).attr('type') || $(elements[i]).prop('tagName').toLowerCase()
