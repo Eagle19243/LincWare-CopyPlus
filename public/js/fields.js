@@ -16,10 +16,28 @@ async function saveButtonClicked() {
     const items = await getValueFromStroage(['sources', 'destinations']);
 
     if (isSource()) {
-        items.sources[getTargetIndex()].url = $('#target_url').html();
+        const data = items.sources[getTargetIndex()];
+        data.url = $('#target_url').html();
+        
+        for (const key in data) {
+            if (key.indexOf('field') > -1) {
+                data[key].enabled = $(`#${key} input[type=checkbox]`).is(':checked');
+            }
+        }
+
+        items.sources[getTargetIndex()] = data;
         setValueToStorage({'sources': items.sources});
     } else {
-        items.destinations[getTargetIndex()].url = $('#target_url').html();
+        const data = items.destinations[getTargetIndex()];
+        data.url = $('#target_url').html();
+        
+        for (const key in data) {
+            if (key.indexOf('field') > -1) {
+                data[key].enabled = $(`#${key} input[type=checkbox]`).is(':checked');
+            }
+        }
+
+        items.destinations[getTargetIndex()] = data;
         setValueToStorage({'destinations': items.destinations});
     }
 
@@ -83,10 +101,8 @@ async function initUI() {
         fields = response.fields;
     }
 
-    console.log(fields);
-
     fields.forEach((field, i) => {
-        const content = `<div class="input-item"> \
+        const content = `<div class="input-item" id="field_${i}"> \
                             <div class="checkbox-custom checkbox-primary"> \
                                 <input type="checkbox" checked /> \
                             </div> \

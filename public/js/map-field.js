@@ -20,7 +20,7 @@ async function initUI() {
     $('#legend_destination').html(`${destination.name}(Destination)`);
 
     for (const key in source) {
-        if (key.indexOf('field') > -1) {
+        if (key.indexOf('field') > -1 && source[key].enabled) {
             const content = `<div class="input-item">
                                 <label class="lbl-source-name" data-field-name="${source[key].name}">
                                     ${source[key].name}
@@ -31,7 +31,7 @@ async function initUI() {
     }
 
     for (const key in destination) {
-        if (key.indexOf('field') > -1) {
+        if (key.indexOf('field') > -1 && destination[key].enabled) {
             const content = `<div class="input-item">
                                 <label class="lbl-destination-name" data-field-name="${destination[key].name}">
                                     ${destination[key].name}
