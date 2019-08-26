@@ -5,12 +5,8 @@ function init() {
     chrome.tabs.onActivated.addListener(onTabActivated);
     chrome.tabs.onUpdated.addListener(onTabUpdated);
     chrome.runtime.onMessage.addListener(handleMessage);
-    
-    setValueToStorage({'map': {}});
-    // setValueToStorage({'sources': []});
-    // setValueToStorage({'destinations': []});
-    clearCache();
 
+    clearCache();
 }
 
 async function setPopup() {
