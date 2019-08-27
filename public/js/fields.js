@@ -17,7 +17,6 @@ async function saveButtonClicked() {
 
     if (isSource()) {
         const data = items.sources[getTargetIndex()];
-        data.url = $('#target_url').html();
         
         for (const key in data) {
             if (key.indexOf('field') > -1) {
@@ -29,7 +28,6 @@ async function saveButtonClicked() {
         setValueToStorage({'sources': items.sources});
     } else {
         const data = items.destinations[getTargetIndex()];
-        data.url = $('#target_url').html();
         
         for (const key in data) {
             if (key.indexOf('field') > -1) {
@@ -63,10 +61,12 @@ async function initUI() {
             $('#form_name').html(items.sources[getTargetIndex()].form_name);
             $('#target_url').html(items.sources[getTargetIndex()].url);
         } else {
-            const response = await sendMessageToTab(activeTab.id, {action: 'Get_Form_Name'});
-            items.sources[getTargetIndex()].form_name = response.form_name;
-            $('#form_name').html(response.form_name);
+            items.sources[getTargetIndex()].url = activeTab.url;
             $('#target_url').html(activeTab.url);
+            const response = await sendMessageToTab(activeTab.id, {action: 'Get_Form_Name'});
+            const formName = response ? response.form_name: "";
+            items.sources[getTargetIndex()].form_name = formName;
+            $('#form_name').html(formName);
         }
     } else {
         const name     = items.destinations[getTargetIndex()].name;
@@ -78,10 +78,12 @@ async function initUI() {
             $('#form_name').html(items.destinations[getTargetIndex()].form_name);
             $('#target_url').html(items.destinations[getTargetIndex()].url);
         } else {
-            const response = await sendMessageToTab(activeTab.id, {action: 'Get_Form_Name'});
-            items.destinations[getTargetIndex()].form_name = response.form_name;
-            $('#form_name').html(response.form_name);
+            items.destinations[getTargetIndex()].url = activeTab.url;
             $('#target_url').html(activeTab.url);
+            const response = await sendMessageToTab(activeTab.id, {action: 'Get_Form_Name'});
+            const formName = response ? response.form_name: "";
+            items.destinations[getTargetIndex()].form_name = formName;
+            $('#form_name').html(formName);
         }
     }
 
@@ -120,7 +122,7 @@ async function initUI() {
             items.destinations[getTargetIndex()][`field_${i}`] = field;
         }
     });
-
+    
     if (isSource()) {
         setValueToStorage({'sources': items.sources});
     } else {

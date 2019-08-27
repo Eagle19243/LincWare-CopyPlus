@@ -10,6 +10,7 @@ function init() {
     // setValueToStorage({'sources': []});
     // setValueToStorage({'destinations': []});
     clearCache();
+    setPopup();
 
 }
 

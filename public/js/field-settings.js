@@ -41,5 +41,5 @@ async function saveButtonClicked() {
         setValueToStorage({'destinations': items.destinations});
     }
 
-    location.href = chrome.extension.getURL(`html/fields.html?target=${getTarget()}&target_index=${getTargetIndex()}&edit=${getEditStatus()}`);
+    location.href = chrome.extension.getURL(`html/fields.html?target=${getTarget()}&target_index=${getTargetIndex()}&edit=true`);
 }

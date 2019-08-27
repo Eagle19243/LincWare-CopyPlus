@@ -13,8 +13,9 @@ async function copyButtonClicked() {
     
     const activeTab = await getActiveTab();
     const response  = await sendMessageToTab(activeTab.id, {action: 'Get_Form_Name'});
+    const formName  = response ? response.form_name : "";
     
-    $('.status').html(`Status: ${response.form_name} copied`);
+    $('.status').html(`Status: ${formName} copied`);
 
     const dataToCopy = await getDataToCopy(activeTab.url);
     setValueToStorage({'cache': {
@@ -47,10 +48,12 @@ async function getDataToCopy(url) {
         const tmpArray = key.split('-');
         if (sourceIndex === Number(tmpArray[0])) {
             for (const obj of map[key]) {
+                console.log(obj.source);
                 const response = await sendMessageToTab(activeTab.id, {
                     action: 'Get_Field_Value', 
                     field_name: obj.source
                 });
+                console.log(response);
                 obj.value = response.field_value;
                 data.push(obj);
             }
