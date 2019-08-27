@@ -31,7 +31,10 @@ function handleMessage(request, sender, sendResponse) {
     } else if (request.action === 'Get_Form_Name') {
         sendResponse({form_name: $('form').attr('name')});
     } else if (request.action === 'Get_Field_Value') {
-        const value = $(`form input[name=${request.field_name}], form select[name=${request.field_name}], form textarea[name=${request.field_name}]`).val();
+        const element = $(`form input[name=${request.field_name}], form select[name=${request.field_name}], form textarea[name=${request.field_name}]`)
+        const value = (element.attr('type') === 'checkbox') ?
+                        element.is(':checked') :
+                        element.val();        
         sendResponse({field_value: value});
     } else if (request.action === 'Set_Field_Value') {
         const element = $(`form input[name=${request.field_name}], form select[name=${request.field_name}], form textarea[name=${request.field_name}]`);
