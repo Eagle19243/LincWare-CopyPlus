@@ -18,7 +18,7 @@ async function initUI() {
 
     $('#legend_source').html(`${source.name}(Source)`);
     $('#legend_destination').html(`${destination.name}(Destination)`);
-
+    
     for (const key in source) {
         if (key.indexOf('field') > -1 && source[key].enabled) {
             const content = `<div class="input-item">
