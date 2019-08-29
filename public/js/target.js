@@ -4,7 +4,7 @@ window.onload = () => {
 
 async function init() {
     const items = await getValueFromStroage(['sources', 'destinations']);
-
+    
     if (isSource()) {
         if (getEditStatus()) {
             $('#target_name').val(items.sources[getTargetIndex()].name);
@@ -33,7 +33,7 @@ async function continueButtonClicked() {
     const items = await getValueFromStroage(['sources', 'destinations']);
 
     if (getEditStatus()) {
-        location.href = chrome.extension.getURL(`html/fields.html?target=${getTarget()}&target_index=${targetIndex}&edit=${getEditStatus()}`);
+        location.href = chrome.extension.getURL(`html/fields.html?target=${getTarget()}&target_index=${getTargetIndex()}&edit=${getEditStatus()}`);
         return;
     }
 
