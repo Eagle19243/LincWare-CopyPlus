@@ -19,6 +19,7 @@ async function init() {
     $('#field_label').val(storage[`field_${getFieldIndex()}`].label);
     $('#field_id').val(storage[`field_${getFieldIndex()}`].id);
     $('#field_type').val(storage[`field_${getFieldIndex()}`].type);
+    $('#allow_data_overwrite').prop('checked', storage[`field_${getFieldIndex()}`].overwrite);
 
     $('.btn-save').click(saveButtonClicked);
 }
@@ -30,7 +31,8 @@ async function saveButtonClicked() {
         label: $('#field_label').val(),
         id: $('#field_id').val(),
         value: $('#field_value').val(),
-        type: $('#field_type').val()
+        type: $('#field_type').val(),
+        overwrite: $('#allow_data_overwrite').is(':checked')
     };
     
     if (isSource()) {
