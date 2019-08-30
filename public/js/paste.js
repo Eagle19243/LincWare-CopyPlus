@@ -27,16 +27,32 @@ function closeButtonClicked() {
 }
 
 async function pasteDate() {
-    const activeTab = await getActiveTab();
-    const items     = await getValueFromStroage(['cache']);
-    const data      = items.cache.data  || [];
-    
+    const activeTab              = await getActiveTab();
+    const items                  = await getValueFromStroage(['cache']);
+    const data                   = items.cache.data  || [];
+    const fields_not_overwritten = [];
+
     for (const obj of data) {
-        await sendMessageToTab(activeTab.id, {
-            action: 'Set_Field_Value',
-            field_name: obj.destination,
-            field_value: obj.value
+        const response = await sendMessageToTab(activeTab.id, {
+            action: 'Get_Field_Value', 
+            field_name: obj.destination
         });
+        const currentValue = response? response.field_value : "";
+
+        if (!currentValue || currentValue.length === 0 || obj.overwrite) {
+            await sendMessageToTab(activeTab.id, {
+                action: 'Set_Field_Value',
+                field_name: obj.destination,
+                field_value: obj.value,
+            });
+        } else {
+            fields_not_overwritten.push(obj.destinationLabel);
+        }
+    }
+
+    for (const fieldLabel of fields_not_overwritten) {
+        const content = `<label class="field-item">${fieldLabel}</label>`;
+        $('.warning').append(content);
     }
 }
 

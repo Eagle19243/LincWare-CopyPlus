@@ -37,7 +37,10 @@ async function initUI() {
     for (const key in destination) {
         if (key.indexOf('field') > -1 && destination[key].enabled) {
             const content = `<div class="input-item">
-                                <label class="lbl-destination-name" data-field-name="${destination[key].name}">
+                                <label class="lbl-destination-name" 
+                                       data-field-name="${destination[key].name}"
+                                       data-field-overwrite="${destination[key].overwrite}"
+                                       data-field-label="${destination[key].label}">
                                     ${destination[key].label}
                                 </label>
                                 <a class="btn-remove" data-field-name="${destination[key].name}">
@@ -57,7 +60,9 @@ async function initUI() {
         drop: function (event, element) {
             const obj = {
                 source: $(this).data('field-name'),
-                destination: $(element.draggable).data('field-name')
+                destination: $(element.draggable).data('field-name'),
+                overwrite: $(element.draggable).data('field-overwrite'),
+                destinationLabel: $(element.draggable).data('field-label')
             }
 
             $(this).css('background-color', '#4CAF50');

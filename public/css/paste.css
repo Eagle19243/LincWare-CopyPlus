@@ -17,3 +17,13 @@
 .container-status {
     display: none;
 }
+.warning {
+    display: grid;
+    font-size: 14px;
+}
+.warning .warning-header {
+    background: #fffbf0;
+}
+.warning .field-item {
+    background: #e3ecf3;
+}
