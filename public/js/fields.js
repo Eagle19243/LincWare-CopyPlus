@@ -102,14 +102,15 @@ async function initUI() {
         const response = await sendMessageToTab(activeTab.id, {action: 'Get_Fields'});
         fields = response.fields;
     }
-    
+
     fields.forEach((field, i) => {
-        const content = `<div class="input-item" id="field_${i}"> \
+        const index = i + 1000;
+        const content = `<div class="input-item" id="field_${index}"> \
                             <div class="checkbox-custom checkbox-primary"> \
                                 <input type="checkbox" checked /> \
                             </div> \
                             <input type="text" class="form-control" value="${field.label}" readonly> \
-                            <button type="button" class="btn btn-icon btn-default btn-edit" data-index=${i}> \
+                            <button type="button" class="btn btn-icon btn-default btn-edit" data-index=${index}> \
                                 <i class="icon wb-pencil" aria-hidden="true"></i> \
                             </button> \
                         </div>`;
@@ -117,9 +118,9 @@ async function initUI() {
         $('.btn-edit').click(editButtonClicked);
         
         if (isSource()) {
-            items.sources[getTargetIndex()][`field_${i}`] = field;
+            items.sources[getTargetIndex()][`field_${index}`] = field;
         } else {
-            items.destinations[getTargetIndex()][`field_${i}`] = field;
+            items.destinations[getTargetIndex()][`field_${index}`] = field;
         }
     });
     
