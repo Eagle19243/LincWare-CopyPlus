@@ -19,6 +19,8 @@ async function pasteButtonClicked() {
 
 function resetButtonClicked() {
     clearCache();
+    $('.body-data-to-paste label').remove();
+    $('.btn-paste').prop('disabled', true);
 }
 
 function closeButtonClicked() {
@@ -60,6 +62,11 @@ async function initUI() {
     const items     = await getValueFromStroage(['cache']);
     const data      = items.cache.data  || [];
     
+    if (data.length === 0) {
+        $('.btn-paste').prop('disabled', true);
+        return;
+    }
+
     for (const obj of data) {
         const content = `<label>${obj.source}: ${obj.value}</label>`;
         $('.body-data-to-paste').append(content);
