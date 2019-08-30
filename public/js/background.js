@@ -9,6 +9,7 @@ function init() {
     // setValueToStorage({'map': {}});
     // setValueToStorage({'sources': []});
     // setValueToStorage({'destinations': []});
+    reloadAllTabs();
     clearCache();
     setPopup();
 
@@ -77,6 +78,17 @@ function handleMessage(request, sender, sendResponse) {
     if (request.action === 'Resetup_Popup') {
         setPopup();
     }
+}
+
+/**
+ * Reload all open tabs
+ */
+function reloadAllTabs() {
+    chrome.tabs.query({currentWindow: true}, (tabs) => {
+        for (const tab of tabs) {
+            chrome.tabs.reload(tab.id);
+        }
+    });
 }
 
 /**
