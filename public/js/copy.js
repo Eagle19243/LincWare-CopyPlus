@@ -52,7 +52,7 @@ async function getDataToCopy(url) {
                     action: 'Get_Field_Value', 
                     field_name: obj.source
                 });
-                obj.value = response.field_value;
+                obj.value = response? response.field_value : "";
                 data.push(obj);
             }
         }
