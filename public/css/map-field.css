@@ -27,6 +27,8 @@
 }
 .body .container-targets fieldset .input-item {
     margin-bottom: 5px;
+    display: flex;
+    align-items: center;
 }
 .body .container-targets fieldset label {
     background: #f3f7f9;
@@ -38,6 +40,16 @@
     color: #76838f;
     border: 1px solid #e4eaec;
     border-radius: 3px;
+}
+.body .container-targets fieldset .input-item a {
+    cursor: pointer !important;
+    text-decoration: none !important;
+    margin-left: 5px !important;
+    color: #ff6a60 !important;
+    display: none;
+}
+.body .container-targets fieldset .input-item a i {
+    margin-left: 5px !important;
 }
 .footer .btn-back {
     float: left;

@@ -12,9 +12,13 @@ function init() {
 }
 
 async function initUI() {
-    const items             = await getValueFromStroage(['sources', 'destinations']);
+    const items             = await getValueFromStroage(['sources', 'destinations', 'map']);
     const source            = items.sources[getSourceIndex()];
     const destination       = items.destinations[getDestinationIndex()];
+    
+    if (items.map) {
+        fields_map = items.map[`${getSourceIndex()}-${getDestinationIndex()}`] || [];
+    }
 
     $('#legend_source').html(`${source.name}(Source)`);
     $('#legend_destination').html(`${destination.name}(Destination)`);
@@ -36,6 +40,9 @@ async function initUI() {
                                 <label class="lbl-destination-name" data-field-name="${destination[key].name}">
                                     ${destination[key].label}
                                 </label>
+                                <a class="btn-remove" data-field-name="${destination[key].name}">
+                                    <i class="icon wb-trash" aria-hidden="true"></i>
+                                </a>
                              </div>`;
             $('#fields_destination').append(content);
         }
@@ -59,9 +66,25 @@ async function initUI() {
             $(element.draggable).css('background-color', '#4CAF50');
             $(element.draggable).css('color', '#FFFFFF');
             $(element.draggable).draggable('disable');
+            $(element.draggable).parent().find('.btn-remove').show();
             fields_map.push(obj);
         }
     });
+
+    for (const obj of fields_map) {
+        const sourceElement = $(`.lbl-source-name[data-field-name=${obj.source}]`);
+        const destinationElement = $(`.lbl-destination-name[data-field-name=${obj.destination}]`);
+        sourceElement.css('background-color', '#4CAF50');
+        sourceElement.css('color', '#FFFFFF');
+        destinationElement.css('background-color', '#4CAF50');
+        destinationElement.css('color', '#FFFFFF');
+        sourceElement.droppable('disable');
+        destinationElement.draggable('disable');
+
+        destinationElement.parent().find('.btn-remove').show();
+    }
+    
+    $('.btn-remove').click(removeButtonClicked);
 }
 
 function backButtonClicked() {
@@ -76,4 +99,24 @@ async function saveButtonClicked() {
     setValueToStorage({'map': map});
     chrome.runtime.sendMessage({action: 'Resetup_Popup'});
     window.close();
+}
+
+function removeButtonClicked(e) {
+    const destination = $(e.currentTarget).data('field-name');
+    const index = fields_map.findIndex((obj) => {
+        return obj.destination === destination;
+    });
+    
+    if (index > -1) {
+        $(e.currentTarget).hide();
+        const sourceElement = $(`.lbl-source-name[data-field-name=${fields_map[index].source}`);
+        const destinationElement = $(`.lbl-destination-name[data-field-name=${fields_map[index].destination}`);
+        sourceElement.css('background-color', '#f3f7f9');
+        sourceElement.css('color', '#76838f');
+        sourceElement.droppable('enable');
+        destinationElement.css('background-color', '#f3f7f9');
+        destinationElement.css('color', '#76838f');
+        destinationElement.draggable('enable');
+        fields_map.splice(index, 1);
+    }
 }
