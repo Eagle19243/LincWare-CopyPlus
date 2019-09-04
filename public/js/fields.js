@@ -47,6 +47,23 @@ function editButtonClicked(e) {
     location.href    = chrome.extension.getURL(`html/field-settings.html?target=${getTarget()}&field_index=${fieldIndex}&target_index=${getTargetIndex()}&edit=${getEditStatus()}`);
 }
 
+async function onCheckboxChange(e) {
+    const fieldIndex = $(this).data('index');
+    const items = await getValueFromStroage(['sources', 'destinations']);
+
+    if (isSource()) {
+        const data                          = items.sources[getTargetIndex()];
+        data[`field_${fieldIndex}`].enabled = this.checked;
+        items.sources[getTargetIndex()]     = data;
+        setValueToStorage({'sources': items.sources});
+    } else {
+        const data                           = items.destinations[getTargetIndex()];
+        data[`field_${fieldIndex}`].enabled  = this.checked;
+        items.destinations[getTargetIndex()] = data;
+        setValueToStorage({'destinations': items.destinations});
+    }
+}
+
 async function initUI() {
     const activeTab = await getActiveTab();
     const items      = await getValueFromStroage(['sources', 'destinations']);
@@ -104,10 +121,12 @@ async function initUI() {
     }
 
     fields.forEach((field, i) => {
-        const index = i + 1000;
+        field.enabled = field.enabled === false ? false: true;
+        const checked = field.enabled === true ? 'checked' : '';
+        const index   = i + 1000;
         const content = `<div class="input-item" id="field_${index}"> \
                             <div class="checkbox-custom checkbox-primary"> \
-                                <input type="checkbox" checked /> \
+                                <input type="checkbox" data-index=${index} ${checked}> \
                             </div> \
                             <input type="text" class="form-control" value="${field.label}" readonly> \
                             <button type="button" class="btn btn-icon btn-default btn-edit" data-index=${index}> \
@@ -116,6 +135,7 @@ async function initUI() {
                         </div>`;
         $('#fields_found').append(content);
         $('.btn-edit').click(editButtonClicked);
+        $('.checkbox-custom input[type="checkbox"]').change(onCheckboxChange);
         
         if (isSource()) {
             items.sources[getTargetIndex()][`field_${index}`] = field;

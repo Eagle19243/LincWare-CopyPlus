@@ -36,9 +36,11 @@ async function saveButtonClicked() {
     };
     
     if (isSource()) {
+        obj.enabled = items.sources[getTargetIndex()][`field_${getFieldIndex()}`].enabled;
         items.sources[getTargetIndex()][`field_${getFieldIndex()}`] = obj;
         setValueToStorage({'sources': items.sources});
     } else {
+        obj.enabled = items.destinations[getTargetIndex()][`field_${getFieldIndex()}`].enabled;
         items.destinations[getTargetIndex()][`field_${getFieldIndex()}`] = obj;
         setValueToStorage({'destinations': items.destinations});
     }
