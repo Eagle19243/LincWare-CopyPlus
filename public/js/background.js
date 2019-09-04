@@ -4,6 +4,7 @@ function init() {
     chrome.browserAction.onClicked.addListener(onBrowserActionClicked);
     chrome.tabs.onActivated.addListener(onTabActivated);
     chrome.tabs.onUpdated.addListener(onTabUpdated);
+    chrome.windows.onFocusChanged.addListener(onFocusChanged);
     chrome.runtime.onMessage.addListener(handleMessage);
     
     // setValueToStorage({'map': {}});
@@ -17,6 +18,11 @@ function init() {
 
 async function setPopup() {
     const activeTab                         = await getActiveTab();
+
+    if (activeTab === null) {
+        return;
+    }
+
     const items                             = await getValueFromStroage(['cache']);
     const isRegisteredAsSource              = await isURLRegisteredAsSource(activeTab.url);
     const isRegisteredAsDestination         = await isURLRegisteredAsDestination(activeTab.url);
@@ -72,6 +78,13 @@ function onTabUpdated(tabId, changeInfo, tab) {
 }
 
 /**
+ * Event when currently focused window changes
+ */
+function onFocusChanged() {
+    setPopup();
+}
+
+/**
  * Handle messages from content.js
  */
 function handleMessage(request, sender, sendResponse) {
@@ -84,7 +97,7 @@ function handleMessage(request, sender, sendResponse) {
  * Reload all open tabs
  */
 function reloadAllTabs() {
-    chrome.tabs.query({currentWindow: true}, (tabs) => {
+    chrome.tabs.query({}, (tabs) => {
         for (const tab of tabs) {
             chrome.tabs.reload(tab.id);
         }
