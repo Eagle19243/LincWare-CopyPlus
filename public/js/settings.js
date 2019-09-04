@@ -77,6 +77,8 @@ async function removeButtonClicked(e) {
     const target = $(e.currentTarget).data('target');
     const items =  await getValueFromStroage(['sources', 'destinations']);
     
+    removeMap(target, targetIndex);
+
     if (target === 'source') {
         items.sources.splice(targetIndex, 1);
         setValueToStorage({'sources': items.sources});

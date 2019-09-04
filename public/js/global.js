@@ -154,6 +154,23 @@ async function getSourceURLByDestinationURLInMap(url) {
     return sources[sourceIndex].url;
 }
 
+async function removeMap(target, targetIndex) {
+    const items = await getValueFromStroage(['map']);
+    const map   = items.map || {};
+
+    for (key in map) {
+        const tmpArray         = key.split('-');
+        const sourceIndex      = Number(tmpArray[0]);
+        const destinationIndex = Number(tmpArray[1]);
+        if ((target === 'source' && targetIndex === sourceIndex) || 
+            (target === 'destination' && targetIndex === destinationIndex)) {
+            delete map[key];
+        }
+    }
+
+    setValueToStorage({'map': map});
+}
+
 async function clearCache() {
     setValueToStorage({'cache': {
         is_copied: false,
