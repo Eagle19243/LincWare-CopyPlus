@@ -73,6 +73,7 @@ async function initUI() {
             $(element.draggable).draggable('disable');
             $(element.draggable).parent().find('.btn-remove').show();
             fields_map.push(obj);
+            sort($(this), $(element.draggable), true);
         }
     });
 
@@ -85,8 +86,8 @@ async function initUI() {
         destinationElement.css('color', '#FFFFFF');
         sourceElement.droppable('disable');
         destinationElement.draggable('disable');
-
         destinationElement.parent().find('.btn-remove').show();
+        sort(sourceElement, destinationElement, true);
     }
     
     $('.btn-remove').click(removeButtonClicked);
@@ -123,5 +124,16 @@ function removeButtonClicked(e) {
         destinationElement.css('color', '#76838f');
         destinationElement.draggable('enable');
         fields_map.splice(index, 1);
+        sort(sourceElement, destinationElement, false);
+    }
+}
+
+function sort(source, destination, isMapped) {
+    if (isMapped) {
+        $('#legend_source').after(source.parent());
+        $('#legend_destination').after(destination.parent());
+    } else {
+        $('#fields_source').append(source.parent());
+        $('#fields_destination').append(destination.parent());
     }
 }
