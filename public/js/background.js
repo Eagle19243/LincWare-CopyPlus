@@ -13,7 +13,6 @@ function init() {
     reloadAllTabs();
     clearCache();
     setPopup();
-
 }
 
 async function setPopup() {
