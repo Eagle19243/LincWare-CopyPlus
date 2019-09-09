@@ -37,6 +37,7 @@ async function saveButtonClicked() {
 
         items.destinations[getTargetIndex()] = data;
         setValueToStorage({'destinations': items.destinations});
+        await refreshMap(getTargetIndex(), false);
     }
 
     location.href = chrome.extension.getURL(`html/settings.html?target=${getTarget()}&target_index=${getTargetIndex()}`);
@@ -121,6 +122,7 @@ async function initUI() {
     }
 
     fields.forEach((field, i) => {
+        field.overwrite = field.overwrite === false ? false: true;
         field.enabled = field.enabled === false ? false: true;
         const checked = field.enabled === true ? 'checked' : '';
         const index   = i + 1000;

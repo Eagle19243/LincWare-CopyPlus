@@ -178,3 +178,36 @@ async function clearCache() {
         data: []
     }});
 }
+
+async function refreshMap(targetIndex, isSource) {
+    const items        = await getValueFromStroage(['map', 'destinations', 'sources']);
+    const map          = items.map || {};
+    const destinations = items.destinations || [];
+    
+    for (const key in map) {
+        const tempAry          = key.split('-');
+        const destinationIndex = Number(tempAry[1]);
+
+        if (!isSource && destinationIndex === targetIndex) {
+            for (const fieldKey in destinations[destinationIndex]) {
+                const field = destinations[destinationIndex][fieldKey];
+                const mapItemIndex = map[key].findIndex((mapItem) => {
+                    return mapItem.destination == field.name;
+                });
+                
+                if (mapItemIndex === -1) {
+                    continue;
+                }
+
+                map[key][mapItemIndex] = {
+                    source: map[key][mapItemIndex].source,
+                    destination: field.name,
+                    overwrite: field.overwrite,
+                    destinationLabel: field.label
+                }
+            }
+        }
+    }
+    
+    setValueToStorage({'map': map});
+}

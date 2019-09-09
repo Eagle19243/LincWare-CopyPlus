@@ -13,7 +13,7 @@ function init() {
 async function pasteButtonClicked() {
     $('.container-paste').hide();
     $('.container-status').show();
-    await pasteDate();
+    await pasteData();
     clearCache();
 }
 
@@ -28,12 +28,12 @@ function closeButtonClicked() {
     window.close();
 }
 
-async function pasteDate() {
+async function pasteData() {
     const activeTab              = await getActiveTab();
     const items                  = await getValueFromStroage(['cache']);
     const data                   = items.cache.data  || [];
     const fields_not_overwritten = [];
-
+    
     for (const obj of data) {
         const response = await sendMessageToTab(activeTab.id, {
             action: 'Get_Field_Value', 
