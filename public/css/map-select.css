@@ -1,0 +1,59 @@
+.container {
+    width: 500px !important;
+    height: auto !important;
+    padding: 20px !important;
+}
+.container .header {
+    border: 1px solid transparent;
+    border-bottom-color: rgba(0,0,0,.075);
+    margin-bottom: 15px;
+}
+.body .container-targets {
+    display: flex;
+}
+.body .container-targets fieldset {
+    width: 50% !important;
+    border: 1px solid !important;
+    padding: 10px !important;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+}
+.body .container-targets fieldset legend {
+    width: auto !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    margin-bottom: 0px !important;
+    font-size: 14px !important;
+}
+.body .container-targets fieldset .input-item {
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+}
+.body .container-targets fieldset label {
+    background: #f3f7f9;
+    width: 100%;
+    height: 36px;
+    padding: 6px 15px;
+    font-size: 14px;
+    line-height: 1.57142857;
+    color: #76838f;
+    border: 1px solid #e4eaec;
+    border-radius: 3px;
+}
+.body .container-targets fieldset .input-item a {
+    cursor: pointer !important;
+    text-decoration: none !important;
+    margin-left: 5px !important;
+    color: #ff6a60 !important;
+    display: none;
+}
+.body .container-targets fieldset .input-item a i {
+    margin-left: 5px !important;
+}
+.footer .btn-back {
+    float: left;
+}
+.footer .btn-save {
+    float: right;
+}
