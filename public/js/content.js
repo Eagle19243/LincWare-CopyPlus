@@ -18,12 +18,13 @@ function handleMessage(request, sender, sendResponse) {
                             $(elements[i]).is(':checked') :
                             $(elements[i]).val();
             const obj = {
-                name: $(elements[i]).attr('name'),
-                label: $(elements[i]).attr('name'),
+                name: $(elements[i]).attr('aria-labelledby') || $(elements[i]).attr('name'),
+                label: $(elements[i]).attr('aria-labelledby') || $(elements[i]).attr('name'),
                 id: $(elements[i]).attr('id'),
                 value: value,
                 type: $(elements[i]).attr('type') || $(elements[i]).prop('tagName').toLowerCase()
             }
+            
             fields.push(obj);
         });
 
@@ -31,13 +32,13 @@ function handleMessage(request, sender, sendResponse) {
     } else if (request.action === 'Get_Form_Name') {
         sendResponse({form_name: $('form').attr('name')});
     } else if (request.action === 'Get_Field_Value') {
-        const element = $(`form input[name="${request.field_name}"], form select[name="${request.field_name}"], form textarea[name="${request.field_name}"]`)
+        const element = $(`form input[name="${request.field_name}"], form select[name="${request.field_name}"], form textarea[name="${request.field_name}"], form input[aria-labelledby="${request.field_name}"], form select[aria-labelledby="${request.field_name}"], form textarea[aria-labelledby="${request.field_name}"]`)
         const value = (element.attr('type') === 'checkbox') ?
                         element.is(':checked') :
                         element.val();        
         sendResponse({field_value: value});
     } else if (request.action === 'Set_Field_Value') {
-        const element = $(`form input[name="${request.field_name}"], form select[name="${request.field_name}"], form textarea[name="${request.field_name}"]`);
+        const element = $(`form input[name="${request.field_name}"], form select[name="${request.field_name}"], form textarea[name="${request.field_name}"], form input[aria-labelledby="${request.field_name}"], form select[aria-labelledby="${request.field_name}"], form textarea[aria-labelledby="${request.field_name}"]`);
         
         if (element.attr('type') === 'checkbox') {
             element.prop('checked', request.field_value);
