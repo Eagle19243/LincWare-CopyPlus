@@ -39,7 +39,7 @@ async function getDataToCopy(url) {
     const sources   = items.sources;
 
     const sourceIndex    = sources.findIndex((source) => {
-        return source.url === url;
+        return url.indexOf(source.url) > -1;
     });
 
     let data = [];

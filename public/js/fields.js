@@ -24,6 +24,8 @@ async function saveButtonClicked() {
             }
         }
 
+        data.url = $('#target_url').html();
+        data.form_name = $('#form_name').html();
         items.sources[getTargetIndex()] = data;
         setValueToStorage({'sources': items.sources});
     } else {
@@ -35,6 +37,8 @@ async function saveButtonClicked() {
             }
         }
 
+        data.url = $('#target_url').html();
+        data.form_name = $('#form_name').html();
         items.destinations[getTargetIndex()] = data;
         setValueToStorage({'destinations': items.destinations});
         await refreshMap(getTargetIndex(), false);
@@ -104,6 +108,18 @@ async function initUI() {
             $('#form_name').html(formName);
         }
     }
+
+    // Editable labels
+    $('#target_url').editable({
+        type: 'text',
+        name: 'target_url',
+        mode: 'inline'
+    });
+    $('#form_name').editable({
+        type: 'text',
+        name: 'form_name',
+        mode: 'inline'
+    });
 
     let fields = [];
 

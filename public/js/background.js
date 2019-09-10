@@ -38,7 +38,7 @@ async function setPopup() {
     if (isRegisteredAsDestination && 
         isRegisteredAsDestinationInMap && 
         isCopied && 
-        copiedURL === sourceURL) {
+        copiedURL.indexOf(sourceURL) > -1) {
 
         chrome.browserAction.setPopup({popup: "html/paste.html"});
     } else if (isRegisteredAsSource && isRegisteredAsSourceInMap) {

@@ -73,7 +73,7 @@ async function isURLRegisteredAsSource(url) {
     const sources   = items.sources || [];
     
     const sourceIndex    = sources.findIndex((source) => {
-        return source.url === url;
+        return url.indexOf(source.url) > -1;
     });
     
     return (sourceIndex === null || sourceIndex === -1) ? false: true;
@@ -84,7 +84,7 @@ async function isURLRegisteredAsDestination(url) {
     const destinations   = items.destinations || [];
 
     const destinationIndex    = destinations.findIndex((destination) => {
-        return destination.url === url;
+        return url.indexOf(destination.url) > -1;
     });
 
     return (destinationIndex === null || destinationIndex === -1) ? false: true;
@@ -96,7 +96,7 @@ async function isURLRegisteredAsSourceInMap(url) {
     const sources   = items.sources || [];
     
     const sourceIndex    = sources.findIndex((source) => {
-        return source.url === url;
+        return url.indexOf(source.url) > -1;
     });
 
     for (key in map) {
@@ -115,7 +115,7 @@ async function isURLRegisteredAsDestinationInMap(url) {
     const destinations = items.destinations || [];
 
     const destinationIndex    = destinations.findIndex((destination) => {
-        return destination.url === url;
+        return url.indexOf(destination.url) > -1;
     });
 
     for (key in map) {
@@ -135,7 +135,7 @@ async function getSourceURLByDestinationURLInMap(url) {
     const sources      = items.sources || [];
 
     const destinationIndex    = destinations.findIndex((destination) => {
-        return destination.url === url;
+        return url.indexOf(destination.url) > -1;
     });
 
     let sourceIndex = null;
